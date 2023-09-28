@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
 
         btConnect.setOnClickListener {
             // Crear un Intent para ir a la actividad de destino
-            val intent = Intent(this, activity_messages_window::class.java)
+            val intent = Intent(this, Activity_messages_window::class.java)
 
             nickname = binding.nickNameText.text.toString()
             ipserver = binding.serverAddressText.text.toString()
