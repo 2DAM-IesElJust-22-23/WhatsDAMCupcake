@@ -28,33 +28,17 @@ class MainActivity : AppCompatActivity() {
         }
 
         val btConnect = binding.buttonConnect
-        val btNickname = binding.nickNameText
-        val btnServer = binding.serverAddressText
 
         btConnect.setOnClickListener {
             // Crear un Intent para ir a la actividad de destino
             val intent = Intent(this, activity_messages_window::class.java)
 
+            nickname = binding.nickNameText.text.toString()
+            ipserver = binding.serverAddressText.text.toString()
+
             // Iniciar la actividad de destino
-            startActivity(intent)
-        }
-
-        btNickname.setOnClickListener{
-            val nickNameText = binding.nickNameText.text.toString()
-
-            if(nickNameText.isNotEmpty()){
-                nickname = nickNameText
-            }else{
-                nickname = ""
-            }
-
-        }
-
-        btnServer.setOnClickListener{
-            val ip = binding.serverAddressText.text.toString()
-
-            if(isNumericAddress(ip)){
-                ipserver = ip
+            if((nickname != "") and isNumericAddress(ipserver)){
+                startActivity(intent)
             }
         }
 
