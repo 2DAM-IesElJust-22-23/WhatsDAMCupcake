@@ -21,6 +21,7 @@
         app:layout_constraintVertical_bias="0.064"
         app:srcCompat="@drawable/logo" />
 
+
     <EditText
         android:id="@+id/nickNameText"
         android:layout_width="wrap_content"
@@ -30,6 +31,8 @@
         android:inputType="text"
         android:minHeight="48dp"
         android:text="@string/nickname"
+        android:contentDescription="@string/nickname"
+        android:hint = "Nickname"
         app:layout_constraintBottom_toTopOf="@+id/serverAddressText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -46,6 +49,8 @@
         android:inputType="text"
         android:minHeight="48dp"
         android:text="@string/serverAddress"
+        android:contentDescription="@string/nickname"
+        android:hint = "Nickname"
         app:layout_constraintBottom_toTopOf="@id/buttonConnect"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -56,6 +61,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/Connect"
+        android:contentDescription="@string/app_name"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/serverAddressText"
         app:layout_constraintStart_toStartOf="@+id/serverAddressText"

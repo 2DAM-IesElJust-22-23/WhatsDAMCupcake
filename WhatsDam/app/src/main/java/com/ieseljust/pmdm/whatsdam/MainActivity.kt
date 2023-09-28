@@ -2,6 +2,7 @@ package com.ieseljust.pmdm.whatsdam
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.ieseljust.pmdm.whatsdam.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
