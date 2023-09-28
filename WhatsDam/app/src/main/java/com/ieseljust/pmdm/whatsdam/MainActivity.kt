@@ -1,5 +1,6 @@
 package com.ieseljust.pmdm.whatsdam
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -16,6 +17,16 @@ class MainActivity : AppCompatActivity() {
         // Restaurar el valor del contador si existe un estado guardado
         if (savedInstanceState != null) {
 
+        }
+
+        val btConnect = binding.buttonConnect
+
+        btConnect.setOnClickListener {
+            // Crear un Intent para ir a la actividad de destino
+            val intent = Intent(this, activity_messages_window::class.java)
+
+            // Iniciar la actividad de destino
+            startActivity(intent)
         }
     }
     override fun onStart() {
