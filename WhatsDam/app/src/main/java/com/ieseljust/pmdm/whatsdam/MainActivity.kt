@@ -35,9 +35,11 @@ class MainActivity : AppCompatActivity() {
 
             nickname = binding.nickNameText.text.toString()
             ipserver = binding.serverAddressText.text.toString()
-
+            
             // Iniciar la actividad de destino
             if((nickname != "") and isNumericAddress(ipserver)){
+                intent.putExtra("NICKNAME_KEY", nickname)
+                intent.putExtra("IPSERVER", ipserver)
                 startActivity(intent)
             }
         }
