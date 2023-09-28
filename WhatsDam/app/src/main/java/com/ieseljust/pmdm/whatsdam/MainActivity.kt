@@ -1,15 +1,20 @@
 package com.ieseljust.pmdm.whatsdam
 
 import android.content.Intent
+import android.net.InetAddresses.isNumericAddress
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.annotation.RequiresApi
 import com.ieseljust.pmdm.whatsdam.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private var nickname=""
+    private var ipserver = ""
+    @RequiresApi(Build.VERSION_CODES.Q)
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
@@ -45,7 +50,11 @@ class MainActivity : AppCompatActivity() {
         }
 
         btnServer.setOnClickListener{
+            val ip = binding.serverAddressText.text.toString()
 
+            if(isNumericAddress(ip)){
+                ipserver = ip
+            }
         }
 
     }
