@@ -6,9 +6,12 @@ import android.util.Log
 import com.ieseljust.pmdm.whatsdam.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         // Restaurar el valor del contador si existe un estado guardado
         if (savedInstanceState != null) {
