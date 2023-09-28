@@ -9,7 +9,9 @@ import com.ieseljust.pmdm.whatsdam.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private var nickname=""
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -20,6 +22,8 @@ class MainActivity : AppCompatActivity() {
         }
 
         val btConnect = binding.buttonConnect
+        val btNickname = binding.nickNameText
+        val btnServer = binding.serverAddressText
 
         btConnect.setOnClickListener {
             // Crear un Intent para ir a la actividad de destino
@@ -28,6 +32,22 @@ class MainActivity : AppCompatActivity() {
             // Iniciar la actividad de destino
             startActivity(intent)
         }
+
+        btNickname.setOnClickListener{
+            val nickNameText = binding.nickNameText.text.toString()
+
+            if(nickNameText.isNotEmpty()){
+                nickname = nickNameText
+            }else{
+                nickname = ""
+            }
+
+        }
+
+        btnServer.setOnClickListener{
+
+        }
+
     }
     override fun onStart() {
         super.onStart()
