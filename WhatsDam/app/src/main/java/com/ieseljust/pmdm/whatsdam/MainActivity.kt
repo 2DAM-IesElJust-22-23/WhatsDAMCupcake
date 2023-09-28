@@ -23,7 +23,8 @@ class MainActivity : AppCompatActivity() {
 
         // Restaurar el valor del contador si existe un estado guardado
         if (savedInstanceState != null) {
-
+            nickname = savedInstanceState.getString("nickname", "")
+            ipserver = savedInstanceState.getString("ipserver", "")
         }
 
         val btConnect = binding.buttonConnect
@@ -100,9 +101,13 @@ class MainActivity : AppCompatActivity() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
+        outState.putString("nickname", nickname)
+        outState.putString("ipserver", ipserver)
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
+        nickname = savedInstanceState.getString("nickname", "")
+        ipserver = savedInstanceState.getString("ipserver", "")
     }
 }
