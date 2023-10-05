@@ -12,6 +12,8 @@ import com.ieseljust.pmdm.whatsdam.databinding.ActivityMessagesWindowBinding
 class Activity_messages_window : AppCompatActivity() {
 
     private lateinit var binding: ActivityMessagesWindowBinding
+    data class mensajes(val usuario: String, val mensaje: String, val hora: java.time.Clock)
+    val mensajes_enviados = mutableListOf<mensajes>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
