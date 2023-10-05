@@ -3,6 +3,7 @@ package com.ieseljust.pmdm.whatsdam
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.annotation.RequiresApi
 import com.ieseljust.pmdm.whatsdam.databinding.ActivityMessagesWindowBinding
 import java.time.LocalDateTime
@@ -49,7 +50,7 @@ class Activity_messages_window : AppCompatActivity() {
             val hora = horaActual.format(formatter)
 
             mensajes_enviados.add(mensajes(nickname.toString(),messageText.text.toString(),hora));
-            print(mensajes_enviados.toString())
+
             messageText.text.clear()
         }
     }
