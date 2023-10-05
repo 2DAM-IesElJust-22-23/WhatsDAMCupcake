@@ -32,11 +32,8 @@ class MainActivity : AppCompatActivity() {
             ipserver = savedInstanceState.getString("ipserver", "")
         }
 
-        // Obtiene una referencia al botón de conexión en la vista.
-        val btConnect = binding.buttonConnect
-
         // Configura una función para cuando se haga clic en btConnect
-        btConnect.setOnClickListener {
+        binding.buttonConnect.setOnClickListener {
             // Crear un Intent para ir a la actividad de destino
             val intent = Intent(this, Activity_messages_window::class.java)
 
@@ -45,7 +42,7 @@ class MainActivity : AppCompatActivity() {
             ipserver = binding.serverAddressText.text.toString()
 
             // Iniciar la actividad de destino si el formato es correcto
-            if((nickname != "") and isNumericAddress(ipserver)){
+            if((nickname.isNotEmpty()) and isNumericAddress(ipserver)){
                 intent.putExtra("NICKNAME_KEY", nickname)
                 intent.putExtra("IPSERVER", ipserver)
                 startActivity(intent)
@@ -61,10 +58,5 @@ class MainActivity : AppCompatActivity() {
         outState.putString("ipserver", ipserver)
     }
 
-    // Restaura el estado de la actividad
-    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
-        super.onRestoreInstanceState(savedInstanceState)
-        nickname = savedInstanceState.getString("nickname", "")
-        ipserver = savedInstanceState.getString("ipserver", "")
-    }
+
 }
