@@ -44,9 +44,7 @@ class Activity_messages_window : AppCompatActivity() {
         // Configura el clic del botón "Send Message"
         // Limpia el texto del campo de mensaje
         sendMessage.setOnClickListener {
-            val horaActual = LocalTime.now()
-            val formatter = DateTimeFormatter.ofPattern("HH:mm")
-            val hora = horaActual.format(formatter)
+            val hora = LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm"))
 
             mensajes_enviados.add(mensajes(nickname.toString(),messageText.text.toString(),hora));
             print(mensajes_enviados.toString())
