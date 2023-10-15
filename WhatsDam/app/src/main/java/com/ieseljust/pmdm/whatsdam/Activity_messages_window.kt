@@ -3,14 +3,11 @@ package com.ieseljust.pmdm.whatsdam
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ieseljust.pmdm.whatsdam.databinding.ActivityMessagesWindowBinding
-import java.time.LocalDateTime
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
-import java.util.Date
 
 
 /**
@@ -20,8 +17,8 @@ import java.util.Date
 class Activity_messages_window : AppCompatActivity() {
 
     private lateinit var binding: ActivityMessagesWindowBinding
-    data class mensajes(val usuario: String, val mensaje: String, val hora: String)
-    val mensajes_enviados = mutableListOf<mensajes>()
+    data class Mensaje(val usuario: String, val mensaje: String, val hora: String)
+    private val mensajesEnviados = mutableListOf<Mensaje>()
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,14 +41,14 @@ class Activity_messages_window : AppCompatActivity() {
         recyclerView.layoutManager = layoutManager
 
         // Crear e inicializar tu adaptador (MyAdapter) y asignarlo al RecyclerView
-        val adapter = MyAdapter(mensajes_enviados)
+        val adapter = MyAdapter(mensajesEnviados)
         recyclerView.adapter = adapter
 
         // Indicamos que el tamaño sea fijo
         recyclerView.setHasFixedSize(true)
 
         // Creamos una instancia de adaptador
-        recyclerView.adapter = MyAdapter(mensajes_enviados)
+        recyclerView.adapter = MyAdapter(mensajesEnviados)
 
         // Obtiene los valores de "NICKNAME_KEY" e "IPSERVER" del Intent
         val nickname = intent.getStringExtra("NICKNAME_KEY")
@@ -67,9 +64,10 @@ class Activity_messages_window : AppCompatActivity() {
             val formatter = DateTimeFormatter.ofPattern("HH:mm")
             val hora = horaActual.format(formatter)
 
-            mensajes_enviados.add(mensajes(nickname.toString(),messageText.text.toString(),hora));
+            mensajesEnviados.add(Mensaje(nickname.toString(),messageText.text.toString(),hora))
 
             messageText.text.clear()
+            adapter.notifyDataSetChanged()
         }
     }
 }

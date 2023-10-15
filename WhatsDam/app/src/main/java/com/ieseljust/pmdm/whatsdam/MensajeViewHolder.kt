@@ -8,17 +8,17 @@ import androidx.recyclerview.widget.RecyclerView
 
 class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-    val mensaje_texto = itemView.findViewById(R.id.msg_text) as TextView
-    val hora = itemView.findViewById(R.id.msg_me_timestamp) as TextView
+    private val mensaje_texto = itemView.findViewById(R.id.msg_text) as TextView
+    private val hora = itemView.findViewById(R.id.msg_me_timestamp) as TextView
 
     // Enlazar los datos de Mensajes con la vista
-    fun bind(mensaje: Activity_messages_window.mensajes) {
+    fun bind(mensaje: Activity_messages_window.Mensaje) {
         mensaje_texto.text = mensaje.mensaje
         hora.text = mensaje.hora
     }
 }
 
-class MyAdapter(private val mensajes: List<Activity_messages_window.mensajes>) : RecyclerView.Adapter<MyViewHolder>() {
+class MyAdapter(private val mensajes: List<Activity_messages_window.Mensaje>) : RecyclerView.Adapter<MyViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val inflater = LayoutInflater.from(parent.context)
