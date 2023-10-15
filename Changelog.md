@@ -13,3 +13,15 @@
 
 ### Eliminat
 
+## [Versió 1.0.1] - 15-10-2023
+
+### Afegit
+- Funcionalitat: S'ha afegit la finestra de missatges amb RecyclerView per a veure els missatges que manem.
+
+
+### Canviat
+- S'han fet privats les variables mensaje_texto i hora de MensajeViewHolder.kt
+
+### Eliminat
+
+

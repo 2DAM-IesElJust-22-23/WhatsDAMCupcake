@@ -67,7 +67,6 @@ class Activity_messages_window : AppCompatActivity() {
             mensajesEnviados.add(Mensaje(nickname.toString(),messageText.text.toString(),hora))
 
             messageText.text.clear()
-            adapter.notifyDataSetChanged()
         }
     }
 }
