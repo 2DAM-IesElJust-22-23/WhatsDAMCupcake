@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.annotation.RequiresApi
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.ieseljust.pmdm.whatsdam.databinding.ActivityMessagesWindowBinding
 import java.time.LocalDateTime
 import java.time.LocalTime
@@ -34,6 +35,23 @@ class Activity_messages_window : AppCompatActivity() {
         val messageText = binding.MessageText
         val textView = binding.connectionInfoTextView
         val sendMessage = binding.sendMessage
+
+        // Configurar el RecyclerView
+        val recyclerView = binding.MensajesRecyclerView
+
+        // Asociar el LayoutManager al RecyclerView
+        val layoutManager = LinearLayoutManager(this)
+        recyclerView.layoutManager = layoutManager
+
+        // Crear e inicializar tu adaptador (MyAdapter) y asignarlo al RecyclerView
+        val adapter = MyAdapter(mensajes_enviados)
+        recyclerView.adapter = adapter
+
+        // Indicamos que el tamaño sea fijo
+        recyclerView.setHasFixedSize(true)
+
+        // Creamos una instancia de adaptador
+        recyclerView.adapter = MyAdapter(mensajes_enviados)
 
         // Obtiene los valores de "NICKNAME_KEY" e "IPSERVER" del Intent
         val nickname = intent.getStringExtra("NICKNAME_KEY")
