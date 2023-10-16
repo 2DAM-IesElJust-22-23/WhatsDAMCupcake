@@ -24,4 +24,15 @@
 
 ### Eliminat
 
+## [Versió 1.0.2] - 16-10-2023
+
+### Afegit
+
+### Canviat
+- S'ha solucionat l'error que causava que els missatges s'eliminaren. S'ha mogut la llista i la classe al fitxer "mensaje.kt".
+- S'ha afegit que es notifique a l'adaptador de "MensajesRecyclerView" quan afegim un nou element a la llista per actualitzar-la.
+- S'ha afegit que la vista del RecyclerView es desplace cap a l'última posició de la llista per a mostrar l'últim missatge.
+
+### Eliminat
+
 

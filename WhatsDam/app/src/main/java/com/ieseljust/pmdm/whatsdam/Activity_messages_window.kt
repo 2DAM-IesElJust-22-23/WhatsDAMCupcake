@@ -17,8 +17,6 @@ import java.time.format.DateTimeFormatter
 class Activity_messages_window : AppCompatActivity() {
 
     private lateinit var binding: ActivityMessagesWindowBinding
-    data class Mensaje(val usuario: String, val mensaje: String, val hora: String)
-    private val mensajesEnviados = mutableListOf<Mensaje>()
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -64,8 +62,13 @@ class Activity_messages_window : AppCompatActivity() {
             val formatter = DateTimeFormatter.ofPattern("HH:mm")
             val hora = horaActual.format(formatter)
 
+            // Crear un nuevo objeto de Mensaje y agregarlo a la lista mensajesEnviados.
             mensajesEnviados.add(Mensaje(nickname.toString(),messageText.text.toString(),hora))
+
+            // Notificar al adaptador de MensajesRecyclerView que se ha insertado un nuevo elemento en la lista.
             binding.MensajesRecyclerView.adapter?.notifyItemInserted(mensajesEnviados.size-1)
+
+            // Desplazar la vista del RecyclerView hacia la última posición de la lista (el mensaje recién agregado).
             recyclerView.scrollToPosition(mensajesEnviados.size-1)
 
             messageText.text.clear()

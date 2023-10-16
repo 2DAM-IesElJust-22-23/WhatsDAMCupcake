@@ -5,7 +5,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-
 /**
  * Clase `MyViewHolder` que representa un ViewHolder para un mensaje en el RecyclerView.
  *
@@ -22,7 +21,7 @@ class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
      *
      * @param mensaje El mensaje que se va a mostrar en la vista.
      */
-    fun bind(mensaje: Activity_messages_window.Mensaje) {
+    fun bind(mensaje: Mensaje) {
         mensaje_texto.text = mensaje.mensaje
         hora.text = mensaje.hora
     }
@@ -34,7 +33,7 @@ class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
  * @constructor Crea una instancia de MyAdapter.
  * @param mensajes La lista de mensajes que se mostrarán en el RecyclerView.
  */
-class MyAdapter(private val mensajes: List<Activity_messages_window.Mensaje>) : RecyclerView.Adapter<MyViewHolder>() {
+class MyAdapter(private val mensajes: List<Mensaje>) : RecyclerView.Adapter<MyViewHolder>() {
 
     /**
      * Crea y devuelve una nueva instancia de MyViewHolder.
