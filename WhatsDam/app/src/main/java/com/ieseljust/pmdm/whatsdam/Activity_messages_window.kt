@@ -65,6 +65,8 @@ class Activity_messages_window : AppCompatActivity() {
             val hora = horaActual.format(formatter)
 
             mensajesEnviados.add(Mensaje(nickname.toString(),messageText.text.toString(),hora))
+            binding.MensajesRecyclerView.adapter?.notifyItemInserted(mensajesEnviados.size-1)
+            recyclerView.scrollToPosition(mensajesEnviados.size-1)
 
             messageText.text.clear()
         }
