@@ -7,6 +7,8 @@ object mensajesEnviados{
 
     fun getMensajes() = mensajesEnviados
 
+    fun getUltimoNum()= mensajesEnviados.size-1
+
     fun getNumeroMensajes() = mensajesEnviados.size
 
     fun remove(m:Mensaje) = mensajesEnviados.remove(m)

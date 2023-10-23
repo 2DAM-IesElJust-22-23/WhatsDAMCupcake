@@ -68,10 +68,10 @@ class Activity_messages_window : AppCompatActivity() {
             mensajesEnviados.add(Mensaje(nickname.toString(),messageText.text.toString(),hora))
 
             // Notificar al adaptador de MensajesRecyclerView que se ha insertado un nuevo elemento en la lista.
-            binding.MensajesRecyclerView.adapter?.notifyItemInserted(mensajesEnviados.size-1)
+            binding.MensajesRecyclerView.adapter?.notifyItemInserted(mensajesEnviados.getUltimoNum())
 
             // Desplazar la vista del RecyclerView hacia la última posición de la lista (el mensaje recién agregado).
-            recyclerView.scrollToPosition(mensajesEnviados.size-1)
+            recyclerView.scrollToPosition(mensajesEnviados.getUltimoNum())
 
             messageText.text.clear()
         }
