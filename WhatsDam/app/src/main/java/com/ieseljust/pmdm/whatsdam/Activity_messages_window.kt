@@ -6,6 +6,8 @@ import android.os.Bundle
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ieseljust.pmdm.whatsdam.databinding.ActivityMessagesWindowBinding
+import com.ieseljust.pmdm.whatsdam.model.Mensaje
+import com.ieseljust.pmdm.whatsdam.model.mensajesEnviados
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 

@@ -5,6 +5,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.ieseljust.pmdm.whatsdam.model.Mensaje
+
 /**
  * Clase `MyViewHolder` que representa un ViewHolder para un mensaje en el RecyclerView.
  *
