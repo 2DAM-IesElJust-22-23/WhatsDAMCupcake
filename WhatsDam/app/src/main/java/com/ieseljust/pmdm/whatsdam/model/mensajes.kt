@@ -1,4 +1,19 @@
 package com.ieseljust.pmdm.whatsdam.model
 
 // Lista que usaremos para almacenar los mensajes que enviamos
-val mensajesEnviados = mutableListOf<Mensaje>()
+
+object mensajesEnviados{
+    private val mensajesEnviados = mutableListOf<Mensaje>()
+
+    fun getMensajes() = mensajesEnviados
+
+    fun getNumeroMensajes() = mensajesEnviados.size
+
+    fun remove(m:Mensaje) = mensajesEnviados.remove(m)
+
+    fun add(m:Mensaje) = mensajesEnviados.add(m)
+
+}
+
+
+
