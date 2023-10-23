@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.ieseljust.pmdm.whatsdam.model.Mensaje
+import com.ieseljust.pmdm.whatsdam.model.mensajesEnviados
 
 /**
  * Clase `MyViewHolder` que representa un ViewHolder para un mensaje en el RecyclerView.
@@ -67,7 +68,8 @@ class MyAdapter(private val mensajes: List<Mensaje>) : RecyclerView.Adapter<MyVi
      * @return El número de mensajes en la lista.
      */
     override fun getItemCount(): Int {
-        return mensajes.size
+        return mensajesEnviados.getNumeroMensajes()
+
     }
 }
 
