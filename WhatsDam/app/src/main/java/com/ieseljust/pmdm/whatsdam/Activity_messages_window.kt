@@ -6,12 +6,12 @@ import android.os.Bundle
 import android.view.View
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.ieseljust.pmdm.whatsdam.ViewModels.MissatgesViewModel
 import com.ieseljust.pmdm.whatsdam.databinding.ActivityMessagesWindowBinding
 import com.ieseljust.pmdm.whatsdam.model.Mensaje
 import com.ieseljust.pmdm.whatsdam.model.mensajesEnviados
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
-
 
 /**
  * Esta es la actividad de la ventana de mensajes.
@@ -42,11 +42,10 @@ class Activity_messages_window : AppCompatActivity() {
         recyclerView.layoutManager = layoutManager
 
         // Crear e inicializar tu adaptador (MyAdapter) y asignarlo al RecyclerView
+
         val adapter = MyAdapter(mensajesEnviados) { m: Mensaje, v: View ->
-            MissatgeLongClickedManager(
-                m,
-                v
-            )
+            val missatgesViewModel = MissatgesViewModel(this.application) // Crea una instancia de MissatgesViewModel
+            missatgesViewModel.MissatgeLongClickedManager(m, v) // Llama a la función desde la instancia
         }
         recyclerView.adapter = adapter
 
@@ -54,11 +53,10 @@ class Activity_messages_window : AppCompatActivity() {
         recyclerView.setHasFixedSize(true)
 
         // Creamos una instancia de adaptador
+        val missatgesViewModel = MissatgesViewModel(this.application)
+
         recyclerView.adapter = MyAdapter(mensajesEnviados) { m: Mensaje, v: View ->
-            MissatgeLongClickedManager(
-                m,
-                v
-            )
+            missatgesViewModel.MissatgeLongClickedManager(m, v)
         }
 
         // Obtiene los valores de "NICKNAME_KEY" e "IPSERVER" del Intent

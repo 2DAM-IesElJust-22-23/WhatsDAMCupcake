@@ -1,6 +1,5 @@
 package com.ieseljust.pmdm.whatsdam
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -37,7 +36,7 @@ class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
  * @constructor Crea una instancia de MyAdapter.
  * @param mensajes La lista de mensajes que se mostrarán en el RecyclerView.
  */
-class MyAdapter(private val mensajes: List<Mensaje>, function: (Mensaje, View) -> Boolean) : RecyclerView.Adapter<MyViewHolder>() {
+class MyAdapter(private val mensajes: mensajesEnviados, function: (Mensaje, View) -> Unit) : RecyclerView.Adapter<MyViewHolder>() {
 
     /**
      * Crea y devuelve una nueva instancia de MyViewHolder.
@@ -59,7 +58,7 @@ class MyAdapter(private val mensajes: List<Mensaje>, function: (Mensaje, View) -
      * @param position La posición del mensaje en la lista.
      */
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        val mensaje = mensajes[position]
+        val mensaje = mensajes.getMensaje(position)
         holder.bind(mensaje)
     }
 

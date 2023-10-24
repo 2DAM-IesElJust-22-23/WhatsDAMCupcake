@@ -7,13 +7,14 @@ import androidx.lifecycle.MutableLiveData
 import com.ieseljust.pmdm.whatsdam.MyAdapter
 import com.ieseljust.pmdm.whatsdam.model.Mensaje
 import com.ieseljust.pmdm.whatsdam.repository.MissatgesRepository
+import com.ieseljust.pmdm.whatsdam.model.mensajesEnviados
 
 class MissatgesViewModel(application: Application) : AndroidViewModel(application) {
-        private val _adaptador = MutableLiveData<MyAdapter>().apply{
-            value= MyAdapter(
-                getApplication<Application>().applicationContext
-            ) { m: Mensaje, v: View -> MissatgeLongClickedManager(m, v) }
-        }
+    private val _adaptador = MutableLiveData<MyAdapter>().apply {
+        value = MyAdapter(
+            mensajesEnviados
+        ) { m: Mensaje, v: View -> MissatgeLongClickedManager(m, v) }
+    }
         val adaptador:MutableLiveData<MyAdapter> =_adaptador
 
     public fun add(m:Mensaje){
@@ -28,7 +29,7 @@ class MissatgesViewModel(application: Application) : AndroidViewModel(applicatio
         }
     }
 
-    private fun MissatgeLongClickedManager(contacte:Mensaje, v: View):Boolean {
+    public fun MissatgeLongClickedManager(contacte:Mensaje, v: View):Boolean {
         // Invoquem el metode remove del contacte, que ens retornara
         // la posicio eliminada, i indicarem a l'adaptador que
         // s'ha eliminat l'element en dita posicio
