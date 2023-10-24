@@ -1,5 +1,6 @@
 package com.ieseljust.pmdm.whatsdam
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -36,7 +37,7 @@ class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
  * @constructor Crea una instancia de MyAdapter.
  * @param mensajes La lista de mensajes que se mostrarán en el RecyclerView.
  */
-class MyAdapter(private val mensajes: List<Mensaje>) : RecyclerView.Adapter<MyViewHolder>() {
+class MyAdapter(private val mensajes: List<Mensaje>, function: (Mensaje, View) -> Boolean) : RecyclerView.Adapter<MyViewHolder>() {
 
     /**
      * Crea y devuelve una nueva instancia de MyViewHolder.
@@ -71,5 +72,10 @@ class MyAdapter(private val mensajes: List<Mensaje>) : RecyclerView.Adapter<MyVi
         return mensajesEnviados.getNumeroMensajes()
 
     }
+
+    fun notifyItemRemoved(index: Boolean) {
+
+    }
+
 }
 
