@@ -1,10 +1,11 @@
-package com.ieseljust.pmdm.whatsdam
+package com.ieseljust.pmdm.whatsdam.view
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.ieseljust.pmdm.whatsdam.R
 import com.ieseljust.pmdm.whatsdam.model.Mensaje
 import com.ieseljust.pmdm.whatsdam.model.mensajesEnviados
 

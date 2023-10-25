@@ -13,10 +13,10 @@
         android:theme="@style/Theme.WhatsDAM"
         tools:targetApi="31">
         <activity
-            android:name=".Activity_messages_window"
+            android:name=".view.Activity_messages_window"
             android:exported="true" />
         <activity
-            android:name=".MainActivity"
+            android:name=".view.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

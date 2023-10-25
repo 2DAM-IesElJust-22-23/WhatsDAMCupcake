@@ -4,7 +4,7 @@ import android.app.Application
 import android.view.View
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import com.ieseljust.pmdm.whatsdam.MyAdapter
+import com.ieseljust.pmdm.whatsdam.view.MyAdapter
 import com.ieseljust.pmdm.whatsdam.model.Mensaje
 import com.ieseljust.pmdm.whatsdam.repository.MissatgesRepository
 import com.ieseljust.pmdm.whatsdam.model.mensajesEnviados

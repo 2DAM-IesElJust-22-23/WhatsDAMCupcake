@@ -1,4 +1,4 @@
-package com.ieseljust.pmdm.whatsdam
+package com.ieseljust.pmdm.whatsdam.view
 
 import android.content.Intent
 import android.net.InetAddresses.isNumericAddress

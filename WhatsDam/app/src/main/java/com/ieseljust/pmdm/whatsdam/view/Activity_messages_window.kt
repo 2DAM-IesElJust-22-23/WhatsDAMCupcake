@@ -1,10 +1,12 @@
-package com.ieseljust.pmdm.whatsdam
+package com.ieseljust.pmdm.whatsdam.view
 
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import androidx.annotation.RequiresApi
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ieseljust.pmdm.whatsdam.ViewModels.MissatgesViewModel
 import com.ieseljust.pmdm.whatsdam.databinding.ActivityMessagesWindowBinding
@@ -20,6 +22,7 @@ import java.time.format.DateTimeFormatter
 class Activity_messages_window : AppCompatActivity() {
 
     private lateinit var binding: ActivityMessagesWindowBinding
+    private lateinit var missatgesViewModel: MissatgesViewModel
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -84,6 +87,7 @@ class Activity_messages_window : AppCompatActivity() {
 
             messageText.text.clear()
         }
+
     }
 }
 
