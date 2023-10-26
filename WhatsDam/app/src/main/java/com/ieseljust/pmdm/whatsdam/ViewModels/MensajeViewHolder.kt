@@ -1,4 +1,4 @@
-package com.ieseljust.pmdm.whatsdam.view
+package com.ieseljust.pmdm.whatsdam.ViewModels
 
 import android.view.LayoutInflater
 import android.view.View
@@ -16,6 +16,9 @@ import com.ieseljust.pmdm.whatsdam.model.mensajesEnviados
  * @param itemView La vista que se va a enlazar con el ViewHolder.
  */
 class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
+    // Propiedades de clase utilizadas para hacer referencia a las vistas de texto en un ViewHolder.
+    // Estas propiedades se inicializan en el constructor de la clase MyViewHolder.
 
     private val mensaje_texto = itemView.findViewById(R.id.msg_text) as TextView
     private val hora = itemView.findViewById(R.id.msg_me_timestamp) as TextView
@@ -72,7 +75,11 @@ class MyAdapter(private val mensajes: mensajesEnviados, function: (Mensaje, View
         return mensajesEnviados.getNumeroMensajes()
 
     }
-
+    /**
+     * Notifica la eliminación de un elemento en la lista de mensajes.
+     *
+     * @param index El índice del elemento eliminado.
+     */
     fun notifyItemRemoved(index: Boolean) {
 
     }

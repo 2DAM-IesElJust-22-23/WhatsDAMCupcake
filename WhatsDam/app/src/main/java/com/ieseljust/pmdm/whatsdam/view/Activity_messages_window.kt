@@ -5,10 +5,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import androidx.annotation.RequiresApi
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ieseljust.pmdm.whatsdam.ViewModels.MissatgesViewModel
+import com.ieseljust.pmdm.whatsdam.ViewModels.MyAdapter
 import com.ieseljust.pmdm.whatsdam.databinding.ActivityMessagesWindowBinding
 import com.ieseljust.pmdm.whatsdam.model.Mensaje
 import com.ieseljust.pmdm.whatsdam.model.mensajesEnviados
@@ -21,8 +20,8 @@ import java.time.format.DateTimeFormatter
  */
 class Activity_messages_window : AppCompatActivity() {
 
+    // Propiedad para acceder a las vistas del diseño XML mediante ViewBinding
     private lateinit var binding: ActivityMessagesWindowBinding
-    private lateinit var missatgesViewModel: MissatgesViewModel
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
