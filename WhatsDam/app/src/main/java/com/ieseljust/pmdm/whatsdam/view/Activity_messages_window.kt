@@ -3,8 +3,8 @@ package com.ieseljust.pmdm.whatsdam.view
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import androidx.annotation.RequiresApi
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ieseljust.pmdm.whatsdam.ViewModels.MissatgesViewModel
 import com.ieseljust.pmdm.whatsdam.ViewModels.MyAdapter
@@ -23,9 +23,13 @@ class Activity_messages_window : AppCompatActivity() {
     // Propiedad para acceder a las vistas del diseño XML mediante ViewBinding
     private lateinit var binding: ActivityMessagesWindowBinding
 
+    private lateinit var viewModel: MissatgesViewModel
+
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        viewModel = ViewModelProvider(this)[MissatgesViewModel::class.java]
 
         // Inicializa la vista utilizando el enlace generado por ViewBinding.
         binding = ActivityMessagesWindowBinding.inflate(layoutInflater)
@@ -45,10 +49,7 @@ class Activity_messages_window : AppCompatActivity() {
 
         // Crear e inicializar tu adaptador (MyAdapter) y asignarlo al RecyclerView
 
-        val adapter = MyAdapter(mensajesEnviados) { m: Mensaje, v: View ->
-            val missatgesViewModel = MissatgesViewModel(this.application) // Crea una instancia de MissatgesViewModel
-            missatgesViewModel.MissatgeLongClickedManager(m, v) // Llama a la función desde la instancia
-        }
+        val adapter = MyAdapter()
         recyclerView.adapter = adapter
 
         // Indicamos que el tamaño sea fijo
@@ -57,9 +58,7 @@ class Activity_messages_window : AppCompatActivity() {
         // Creamos una instancia de adaptador
         val missatgesViewModel = MissatgesViewModel(this.application)
 
-        recyclerView.adapter = MyAdapter(mensajesEnviados) { m: Mensaje, v: View ->
-            missatgesViewModel.MissatgeLongClickedManager(m, v)
-        }
+        recyclerView.adapter = MyAdapter()
 
         // Obtiene los valores de "NICKNAME_KEY" e "IPSERVER" del Intent
         val nickname = intent.getStringExtra("NICKNAME_KEY")
@@ -76,7 +75,9 @@ class Activity_messages_window : AppCompatActivity() {
             val hora = horaActual.format(formatter)
 
             // Crear un nuevo objeto de Mensaje y agregarlo a la lista mensajesEnviados.
-            mensajesEnviados.add(Mensaje(nickname.toString(),messageText.text.toString(),hora))
+            binding.sendMessage.setOnClickListener{
+                viewModel.add(Mensaje(nickname.toString(),messageText.text.toString(),hora))
+            }
 
             // Notificar al adaptador de MensajesRecyclerView que se ha insertado un nuevo elemento en la lista.
             binding.MensajesRecyclerView.adapter?.notifyItemInserted(mensajesEnviados.getUltimoNum())
@@ -86,6 +87,12 @@ class Activity_messages_window : AppCompatActivity() {
 
             messageText.text.clear()
         }
+
+        viewModel.adaptador.observe(this) {
+            binding.MensajesRecyclerView.adapter = it
+        }
+
+
 
     }
 }

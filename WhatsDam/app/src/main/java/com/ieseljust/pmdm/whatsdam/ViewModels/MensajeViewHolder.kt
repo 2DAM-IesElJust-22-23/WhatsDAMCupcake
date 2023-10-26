@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ieseljust.pmdm.whatsdam.R
 import com.ieseljust.pmdm.whatsdam.model.Mensaje
 import com.ieseljust.pmdm.whatsdam.model.mensajesEnviados
+import com.ieseljust.pmdm.whatsdam.repository.MissatgesRepository
 
 /**
  * Clase `MyViewHolder` que representa un ViewHolder para un mensaje en el RecyclerView.
@@ -28,7 +29,7 @@ class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
      *
      * @param mensaje El mensaje que se va a mostrar en la vista.
      */
-    fun bind(mensaje: Mensaje) {
+    fun bind(mensaje: Mensaje, eventListener: Any?) {
         mensaje_texto.text = mensaje.mensaje
         hora.text = mensaje.hora
     }
@@ -40,7 +41,7 @@ class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
  * @constructor Crea una instancia de MyAdapter.
  * @param mensajes La lista de mensajes que se mostrarán en el RecyclerView.
  */
-class MyAdapter(private val mensajes: mensajesEnviados, function: (Mensaje, View) -> Unit) : RecyclerView.Adapter<MyViewHolder>() {
+class MyAdapter : RecyclerView.Adapter<MyViewHolder>() {
 
     /**
      * Crea y devuelve una nueva instancia de MyViewHolder.
@@ -62,8 +63,15 @@ class MyAdapter(private val mensajes: mensajesEnviados, function: (Mensaje, View
      * @param position La posición del mensaje en la lista.
      */
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        val mensaje = mensajes.getMensaje(position)
-        holder.bind(mensaje)
+
+        // Obtiene una instancia única del repositorio
+        val repository = MissatgesRepository.getInstance()
+
+        val listaMensajes = repository.getMissatges()
+
+        val mensaje = listaMensajes[position]
+
+        holder.bind(mensaje,null)
     }
 
     /**
@@ -72,7 +80,7 @@ class MyAdapter(private val mensajes: mensajesEnviados, function: (Mensaje, View
      * @return El número de mensajes en la lista.
      */
     override fun getItemCount(): Int {
-        return mensajesEnviados.getNumeroMensajes()
+        return MissatgesRepository.getInstance().getNumMissatges()
 
     }
     /**
