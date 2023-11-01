@@ -6,10 +6,7 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.annotation.RequiresApi
-import androidx.lifecycle.ViewModelProvider
-import com.ieseljust.pmdm.whatsdam.ViewModels.MissatgesViewModel
 import com.ieseljust.pmdm.whatsdam.databinding.ActivityMainBinding
-import com.ieseljust.pmdm.whatsdam.model.Mensaje
 
 /**
  * Esta es la clase principal de la aplicación Android.
