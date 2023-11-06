@@ -85,57 +85,55 @@ class MsgHandler implements Runnable {
     @Override
     public void run() {
         // Mètode que s'encarrega d'executar el fil
+
         try {
-            // TO-DO
-            // Aquest mètode és el que s'encarregarà d'atendre cada petició i generar la
-            // resposta adequada.
+            BufferedReader reader = new BufferedReader(new InputStreamReader(MySocket.getInputStream()));
+            PrintWriter writer = new PrintWriter(MySocket.getOutputStream(), true);
 
-            // Per a això
+            // Llegir la línia enviada pel client
+            String clientRequest = reader.readLine();
 
-            // 1. Llegirem les línies a través de l'InputStream del socket amb què s'ha
-            // obert la connexió (només se'ns passarà una línia per petició)
-            
-            /*
-             * 2. Una vegada tinguem la línia llegida, caldrà convertir-la a objecte JSON
-             * amb:
-             * 
-             * JSONObject MissatgeRebut = new JSONObject(linia);
-             * 
-             * Aquest objecte tindrà la forma
-             * 
-             * {"command": ordre_a_executar, ...}
-             * 
-             * per tant:
-             * 
-             * 3. Obtenim l'ordre (camp "command") del JSON per tal d'obtindre què ens
-             * demana el client.
-             * 
-             * Aquestes ordres podran ser:
-             * 
-             * - "register": Registra l'usuari al servidor, afegint-lo a la llista de connexions.
-             *               Tingueu en compte que ja disposeu d'un mètode RegisterUser en aquesta
-             *               cuasse que implementa aquesta funcionalitat.
-             *
-             * - "newMessage": Es rep un misstge per enviar a la resta de clients. Recordeu que
-             *                 també disposeu d'un mètode sendMessage que envía un missatge 
-             *                 a tots els clients.
-             * 
-             * Cada petició haurà de generar una resposta JSON amb el següent format:
-             * 
-             * {"status": "ok"} si tot és correcte, o 
-             * 
-             * {"status": "error", "error":"Missatge d'error"} 
-             * 
-             * i enviar-la, codificada en un string al client a través del socket.
-             * 
-             *  Consell: Implementar un mètode per atendre cada tipus de missatge, 
-             *           en lloc de fer-ho tot al case. 
-             * 
-             */
-            
+            // Convertir la línia llegida en un objecte JSON
+            JSONObject jsonRequest = new JSONObject(clientRequest);
+
+            // Obtindre la comanda enviada pel client
+            String command = jsonRequest.getString("command");
+
+            // Manejar diferents comandes
+            switch (command) {
+                case "register":
+                    // Trucar al mètode RegisterUser i obtenir la resposta
+                    JSONObject registerResponse = registerUser(jsonRequest);
+
+                    // Enviar la resposta de volta al client
+                    writer.println(registerResponse.toString());
+                    break;
+
+                case "newMessage":
+                    // Trucar al mètode sendMessage i obtenir la resposta
+                    JSONObject messageResponse = sendMessage(jsonRequest);
+
+                    // Enviar la resposta de volta al client
+                    writer.println(messageResponse.toString());
+                    break;
+
+                default:
+                    // Comanda no vàlida
+                    JSONObject errorResponse = new JSONObject();
+                    errorResponse.put("status", "error");
+                    errorResponse.put("error", "Comanda invàlida");
+                    writer.println(errorResponse.toString());
+                    break;
+            }
+
+            MySocket.close(); // Tancar el socket després de respondre
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }
-
     }
 }
+
+        
+
+    
+
