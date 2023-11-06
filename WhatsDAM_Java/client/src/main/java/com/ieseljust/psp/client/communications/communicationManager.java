@@ -27,6 +27,23 @@ public class communicationManager {
         // Envía al servidor l'string msg
         // I retorna un JSON amb la resposta
 
+        try{
+            // Establece la conexión
+            Socket socket = new Socket("127.0.0.1", 9999);
+
+            // Envía el mensaje
+            PrintWriter out = new PrintWriter(socket.getOutputStream(),true);
+
+            // Lee la respuesta del servidor
+            BufferedReader in = new BufferedReader((new InputStreamReader(socket.getInputStream())));
+            String respuesta = in.readLine();
+
+            // Cierra la conexion
+            socket.close();
+
+        }catch(Exception e){
+            System.out.println("Error: " + e);
+        }
         
     }
 
