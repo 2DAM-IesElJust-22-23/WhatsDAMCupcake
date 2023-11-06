@@ -41,9 +41,17 @@ public class communicationManager {
             // Cierra la conexion
             socket.close();
 
+            // Crea un objeto JSON con la respuesta del servidor
+            JSONObject jsonResponse = new JSONObject();
+            jsonResponse.put("respuesta", response);
+
+            return jsonResponse;
+
         }catch(Exception e){
             System.out.println("Error: " + e);
         }
+
+        return null;
         
     }
 
@@ -60,7 +68,28 @@ public class communicationManager {
         // Si es produeix un error, llançarà una excepció i aturarà
         // l'aplicaió (per exemple, si l'usuari ja existeix al servidor)
         // Teniu per a això l'excepció communicationManagerException 
-        // com a excepció personalitzada al projecte. 
+        // com a excepció personalitzada al projecte.
+
+        try{
+            // Establece la conexion
+            Socket socket = new Socket("127.0.0.1", 9999);
+
+            // Envia el mensaje al servidor
+            PrintWriter out = new PrintWriter(socket.getOutputStream(),true);
+
+            // Lee la respuesta del servidor
+            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            String response = in.readLine();
+
+            // Cierra la conexión
+            socket.close();
+
+            if(response.equals("ERROR")){
+                throw new communicationManagerException("Error al entrar en el servidor")
+            }
+        }catch(Exception e){
+            System.out.println("Error: " + e);
+        }
         
 
 
