@@ -14,6 +14,8 @@ public class ServerMsg {
     // Guardem una llista de les connexions actives
     private static ArrayList<Connexio> Connexions;
 
+
+
     public static void init() {
         // init fa de constructor de la classe: Crea l'arrayList de connexions
         Connexions = new ArrayList<Connexio>();
@@ -36,7 +38,7 @@ public class ServerMsg {
 
         while(true){
             try{
-
+                
                 Socket clientSocket = serverSocket.accept();
 
                 Thread thread = new Thread(new MsgHandler(clientSocket,Connexions));
