@@ -27,10 +27,27 @@ public class ServerMsg {
         // Aquest mètode realitzarà les següents operacions
 
         // 1. Crear un socket de tipus servidor que escolte pel port srvPort
+
+        ServerSocket serverSocket = new ServerSocket(srvPort)
         
         // 2. Iniciem un bucle infinit a l'espera de rebre connexions
         // Quan arribe una connexió, haurem de crear un thread per atendre la petició
         // La classe que s'encarregarà d'atendre les peticions és MsgHandler
+
+        while(true){
+            try{
+                
+                Socket clientSocket = serverSocket.accept();
+
+                Thread thread = new Thread(new MsgHandler(clientSocket));
+
+                thread.start();
+
+            }catch(Exception e){
+                System.out.println("Error: " + e);
+            }
+        }
+
 
     }
 
