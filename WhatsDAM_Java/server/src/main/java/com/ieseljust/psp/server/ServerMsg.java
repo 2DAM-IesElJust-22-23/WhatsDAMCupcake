@@ -28,7 +28,7 @@ public class ServerMsg {
 
         // 1. Crear un socket de tipus servidor que escolte pel port srvPort
 
-        ServerSocket serverSocket = new ServerSocket(srvPort)
+        ServerSocket serverSocket = new ServerSocket(srvPort);
         
         // 2. Iniciem un bucle infinit a l'espera de rebre connexions
         // Quan arribe una connexió, haurem de crear un thread per atendre la petició
@@ -36,10 +36,10 @@ public class ServerMsg {
 
         while(true){
             try{
-                
+
                 Socket clientSocket = serverSocket.accept();
 
-                Thread thread = new Thread(new MsgHandler(clientSocket));
+                Thread thread = new Thread(new MsgHandler(clientSocket,Connexions));
 
                 thread.start();
 
