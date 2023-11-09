@@ -43,7 +43,7 @@ public class communicationManager {
 
             // Crea un objeto JSON con la respuesta del servidor
             JSONObject jsonResponse = new JSONObject();
-            jsonResponse.put("respuesta", response);
+            jsonResponse.put("respuesta", respuesta);
 
             return jsonResponse;
 
@@ -85,7 +85,7 @@ public class communicationManager {
             socket.close();
 
             if(response.equals("ERROR")){
-                throw new communicationManagerException("Error al entrar en el servidor")
+                throw new communicationManagerException("Error al entrar en el servidor");
             }
         }catch(Exception e){
             System.out.println("Error: " + e);

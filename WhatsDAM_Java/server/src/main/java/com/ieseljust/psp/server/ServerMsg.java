@@ -47,10 +47,12 @@ public class ServerMsg {
 
             }catch(Exception e){
                 System.out.println("Error: " + e);
+            }finally{
+                serverSocket.close();
             }
         }
 
-        serverSocket.close();
+        
 
 
     }
