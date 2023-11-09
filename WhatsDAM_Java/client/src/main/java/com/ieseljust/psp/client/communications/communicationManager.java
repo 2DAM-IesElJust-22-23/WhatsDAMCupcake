@@ -57,43 +57,30 @@ public class communicationManager {
     }
 
     public static void connect() throws JSONException, communicationManagerException {
+        // Obtener la informaci髇 de configuraci髇 del servidor desde CurrentConfig
+        String username = CurrentConfig.username();
+        int listenPort = CurrentConfig.listenPort();
 
-        // TO-DO:
+        // Crear el mensaje JSON con la orden "register", el nombre de usuario y el puerto de escucha
+        JSONObject registerMessage = new JSONObject();
+        registerMessage.put("command", "register");
+        registerMessage.put("user", username);
+        registerMessage.put("listenPort", listenPort);
 
-        // Creem un misstge pe al servidor amb l'ordre (command) register, 
-        // el nom d'usuari (user) i el port (listenPost) pel qual el client escoltar脿 
-        // les notificacions (el tenim a CurrentConfig.listenPort())
+        try {
+            // Enviar el mensaje al servidor y recibir la respuesta
+            JSONObject response = sendServer(registerMessage.toString());
 
-        // Enviar脿 el missatge al servidor a trav茅s de sendServer.
-
-        // Si es produeix un error, llan莽ar脿 una excepci贸 i aturar脿
-        // l'aplicai贸 (per exemple, si l'usuari ja existeix al servidor)
-        // Teniu per a aix貌 l'excepci贸 communicationManagerException 
-        // com a excepci贸 personalitzada al projecte.
-
-        try{
-            // Establece la conexion
-            Socket socket = new Socket(CurrentConfig.server(), CurrentConfig.port());
-
-            // Envia el mensaje al servidor
-            PrintWriter out = new PrintWriter(socket.getOutputStream(),true);
-
-            // Lee la respuesta del servidor
-            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            String response = in.readLine();
-
-            // Cierra la conexi贸n
-            socket.close();
-
-            if(response.equals("ERROR")){
-                throw new communicationManagerException("Error al entrar en el servidor");
+            // Verificar la respuesta del servidor
+            if (response.has("status") && response.getString("status").equals("error")) {
+                // Si el servidor devuelve un estado de error, lanzar una excepci髇 personalizada
+                throw new communicationManagerException(response.getString("message"));
             }
-        }catch(Exception e){
+
+        } catch (communicationManagerException | JSONException e) {
             System.out.println("Error: " + e);
+            // Manejar la excepci髇 seg鷑 tus necesidades
         }
-        
-
-
     }
 
     public static void sendMessage(Message m){
