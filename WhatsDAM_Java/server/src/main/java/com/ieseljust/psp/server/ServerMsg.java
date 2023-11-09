@@ -5,16 +5,14 @@ import java.net.*;
 import java.util.ArrayList;
 
 public class ServerMsg {
+
     /*
      * Classe servidor de missatges: s'encarregarà d'atendre les peticions dels
      * clients.
      */
 
-
     // Guardem una llista de les connexions actives
     private static ArrayList<Connexio> Connexions;
-
-
 
     public static void init() {
         // init fa de constructor de la classe: Crea l'arrayList de connexions
@@ -23,37 +21,34 @@ public class ServerMsg {
 
     public static void listen(int srvPort) throws IOException {
         // Mètode per escoltar i atendre les peticions
-        
+
         // TO-DO
-
         // Aquest mètode realitzarà les següents operacions
-
         // 1. Crear un socket de tipus servidor que escolte pel port srvPort
-
         ServerSocket serverSocket = new ServerSocket(srvPort);
-        
+
         // 2. Iniciem un bucle infinit a l'espera de rebre connexions
         // Quan arribe una connexió, haurem de crear un thread per atendre la petició
         // La classe que s'encarregarà d'atendre les peticions és MsgHandler
+        try {
+            while (true) {
+                try {
 
-        while(true){
-            try{
-                
-                Socket clientSocket = serverSocket.accept();
+                    Socket clientSocket = serverSocket.accept();
 
-                Thread thread = new Thread(new MsgHandler(clientSocket,Connexions));
+                    Thread thread = new Thread(new MsgHandler(clientSocket, Connexions));
 
-                thread.start();
+                    thread.start();
 
-            }catch(Exception e){
-                System.out.println("Error: " + e);
-            }finally{
-                serverSocket.close();
+                } catch (Exception e) {
+                    System.out.println("Error: " + e);
+                }
             }
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+        } finally {
+            serverSocket.close();
         }
-
-        
-
 
     }
 
@@ -71,17 +66,14 @@ public class ServerMsg {
         // Associem les connexions a les connexions
         // del Notificador.
         Notifier.setConnexions(Connexions);
-        
 
         // Abans de llançar el servidor,
         // llancem un fil, que cada segon
         // envie un "ping" als clients, pe veure
         // si estan encara connectats. En cas
         // contrari, els elimina de la llista
-
         // Ho fem directament, sense una classe runnable,
         // a través d'una subclasse anònima:
-        
         Thread thread = new Thread() {
             public void run() {
                 while (true) {
@@ -97,7 +89,6 @@ public class ServerMsg {
         };
         thread.start();
 
-        
         // Llancem el servidor per a que escolte
         // i atenga les peticions
         ServerMsg.listen(srvPort);
