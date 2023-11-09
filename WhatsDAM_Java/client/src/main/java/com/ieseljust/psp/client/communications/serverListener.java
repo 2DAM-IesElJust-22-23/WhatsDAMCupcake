@@ -52,7 +52,7 @@ public class serverListener implements Runnable {
         // canal de recepció només amb el servidor.
         ServerSocket serSocket = null;
         try {
-            serSocket = new ServerSocket(0);
+            serSocket = new ServerSocket(listenerPort);
             CurrentConfig.setlistenPort(serSocket.getLocalPort());
         } catch (IOException e) {
             System.out.println("Error: " + e);
