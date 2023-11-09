@@ -54,14 +54,12 @@ public class serverListener implements Runnable {
         try {
             serSocket = new ServerSocket(0);
             CurrentConfig.setlistenPort(serSocket.getLocalPort());
-        } catch (Exception e) {
-
+        } catch (IOException e) {
+            System.out.println("Error: " + e);
         }
         try {
 
             while (true) {
-
-                
 
                 // 2. Iniciamos un bucle infinito a la espera de recibir conexiones
                 Socket socket = serSocket.accept(); // Espera a que llegue una conexión
@@ -93,13 +91,23 @@ public class serverListener implements Runnable {
                             // Mensaje tipo lista de usuarios
                             JSONArray userList = jsonMessage.getJSONArray("content");
                             // Procesar la lista de usuarios
+                            ArrayList<String> combinedList = new ArrayList<>();
+
+                            for (int i = 0; i < userList.length(); i++) {
+                                combinedList.add(userList.getString(i));
+                            }
+
+                            combinedList.addAll(vm.getLlistaUsuaris());
                             // Hacer lo que sea necesario con la lista de usuarios
+                            vm.updateUserList(combinedList);
                         } else if (messageType.equals("message")) {
                             // Mensaje tipo mensaje de usuario
                             String username = jsonMessage.getString("user");
                             String content = jsonMessage.getString("content");
                             // Procesar el mensaje del usuario
+                            Message mensaje = new Message(username, content);
                             // Hacer lo que sea necesario con el mensaje
+                            vm.addMessage(mensaje);
                         } else {
                             System.out.println("Mensaje de tipo desconocido: " + messageType);
                         }
@@ -107,7 +115,7 @@ public class serverListener implements Runnable {
                         // Cerramos el socket después de procesar el mensaje
                         socket.close();
                     } catch (IOException e) {
-                        e.printStackTrace();
+                        System.out.println("Error: " + e);
                     }
                 }).start();
             }

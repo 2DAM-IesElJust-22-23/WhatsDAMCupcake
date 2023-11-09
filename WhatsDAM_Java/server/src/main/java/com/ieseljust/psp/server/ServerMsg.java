@@ -10,7 +10,6 @@ public class ServerMsg {
      * Classe servidor de missatges: s'encarregarà d'atendre les peticions dels
      * clients.
      */
-
     // Guardem una llista de les connexions actives
     private static ArrayList<Connexio> Connexions;
 
@@ -30,24 +29,32 @@ public class ServerMsg {
         // 2. Iniciem un bucle infinit a l'espera de rebre connexions
         // Quan arribe una connexió, haurem de crear un thread per atendre la petició
         // La classe que s'encarregarà d'atendre les peticions és MsgHandler
+        System.out.println("000000000000000");
         try {
             while (true) {
                 try {
-
+                    System.out.println("11111111111111117");
                     Socket clientSocket = serverSocket.accept();
 
+                    System.out.println("Conexion recibida");
                     Thread thread = new Thread(new MsgHandler(clientSocket, Connexions));
 
                     thread.start();
 
-                } catch (Exception e) {
+                } catch (IOException e) {
                     System.out.println("Error: " + e);
                 }
             }
         } catch (Exception e) {
             System.out.println("Error: " + e);
         } finally {
-            serverSocket.close();
+            try {
+                if (serverSocket != null && !serverSocket.isClosed()) {
+                    serverSocket.close();
+                }
+            } catch (IOException e) {
+                System.out.println("Error: " + e.getMessage());
+            }
         }
 
     }

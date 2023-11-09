@@ -9,6 +9,7 @@ import javafx.scene.Parent;
 import javafx.stage.Stage;
 
 import com.ieseljust.psp.client.communications.*;
+import org.json.JSONException;
 
 public class App extends Application {
 
@@ -143,10 +144,9 @@ public class App extends Application {
         } catch (communicationManagerException ex) {
             System.err.println(ex.getMessage());
             System.exit(0);
-        } catch(Exception e){
-            e.printStackTrace();
+        } catch(InterruptedException | JSONException e){
+            System.out.println("Error: " + e);
         }
-        ;
 
     }
 

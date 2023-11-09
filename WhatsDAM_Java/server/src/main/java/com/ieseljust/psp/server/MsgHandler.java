@@ -7,7 +7,11 @@ import java.util.ArrayList;
 
 import java.io.InputStreamReader;
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.json.JSONException;
 
 import org.json.JSONObject;
 
@@ -86,19 +90,26 @@ class MsgHandler implements Runnable {
     public void run() {
         // Mètode que s'encarrega d'executar el fil
 
+        System.out.println("SSSSSSSSSSSSSSSSSSSSS");
         try {
+            System.out.println("Hola1");
             BufferedReader reader = new BufferedReader(new InputStreamReader(MySocket.getInputStream()));
             PrintWriter writer = new PrintWriter(MySocket.getOutputStream(), true);
 
             // Llegir la línia enviada pel client
             String clientRequest = reader.readLine();
-
+            
+            System.out.println(clientRequest);
+            System.out.println("Hola2");
             // Convertir la línia llegida en un objecte JSON
             JSONObject jsonRequest = new JSONObject(clientRequest);
-
+            System.out.println("Hola3");
             // Obtindre la comanda enviada pel client
+            // String command = jsonRequest.getString("command");
             String command = jsonRequest.getString("command");
-
+            
+            System.out.println("Hola4");
+            System.out.println(command);
             // Manejar diferents comandes
             switch (command) {
                 case "register":
@@ -107,6 +118,7 @@ class MsgHandler implements Runnable {
 
                     // Enviar la resposta de volta al client
                     writer.println(registerResponse.toString());
+                    writer.flush();
                     break;
 
                 case "newMessage":
@@ -115,20 +127,29 @@ class MsgHandler implements Runnable {
 
                     // Enviar la resposta de volta al client
                     writer.println(messageResponse.toString());
+                    writer.flush();
                     break;
 
                 default:
+                    System.out.println("Comando no valido");
                     // Comanda no vàlida
                     JSONObject errorResponse = new JSONObject();
                     errorResponse.put("status", "error");
                     errorResponse.put("error", "Comanda invàlida");
                     writer.println(errorResponse.toString());
+                    writer.flush();
                     break;
             }
 
-            MySocket.close(); // Tancar el socket després de respondre
-        } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
+            
+        } catch (IOException | JSONException e) {
+            System.out.println("Error: " + e);
+        }finally{
+            try {
+                MySocket.close(); // Tancar el socket després de respondre
+            } catch (IOException ex) {
+                Logger.getLogger(MsgHandler.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 }
