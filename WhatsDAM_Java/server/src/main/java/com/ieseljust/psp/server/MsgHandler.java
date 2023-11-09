@@ -119,6 +119,7 @@ class MsgHandler implements Runnable {
                     // Enviar la resposta de volta al client
                     writer.println(registerResponse.toString());
                     writer.flush();
+                    
                     break;
 
                 case "newMessage":
@@ -139,14 +140,19 @@ class MsgHandler implements Runnable {
                     writer.println(errorResponse.toString());
                     writer.flush();
                     break;
+                
+                    
             }
-
+            reader.close();
+            writer.close();
             
         } catch (IOException | JSONException e) {
             System.out.println("Error: " + e);
         }finally{
             try {
+                
                 MySocket.close(); // Tancar el socket després de respondre
+                
             } catch (IOException ex) {
                 Logger.getLogger(MsgHandler.class.getName()).log(Level.SEVERE, null, ex);
             }

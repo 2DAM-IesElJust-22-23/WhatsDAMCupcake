@@ -29,11 +29,12 @@ public class communicationManager {
 
         try{
             // Establece la conexión
-            Socket socket = new Socket("127.0.0.1", 9999);
+            Socket socket = new Socket(CurrentConfig.server(), CurrentConfig.port());
 
             // Envía el mensaje
             PrintWriter out = new PrintWriter(socket.getOutputStream(),true);
-
+            out.println(msg);
+            
             // Lee la respuesta del servidor
             BufferedReader in = new BufferedReader((new InputStreamReader(socket.getInputStream())));
             String respuesta = in.readLine();
@@ -72,7 +73,7 @@ public class communicationManager {
 
         try{
             // Establece la conexion
-            Socket socket = new Socket("127.0.0.1", 9999);
+            Socket socket = new Socket(CurrentConfig.server(), CurrentConfig.port());
 
             // Envia el mensaje al servidor
             PrintWriter out = new PrintWriter(socket.getOutputStream(),true);
