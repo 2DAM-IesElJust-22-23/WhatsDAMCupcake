@@ -29,21 +29,34 @@ public class communicationManager {
 
         try{
             // Establece la conexiÃ³n
+
+            System.out.println("Estem en sendServer");
             Socket socket = new Socket(CurrentConfig.server(), CurrentConfig.port());
 
             // EnvÃ­a el mensaje
             PrintWriter out = new PrintWriter(socket.getOutputStream(),true);
+            
+            System.out.println("Envie: "+msg);
+            
             out.println(msg);
+            out.flush();
             
             // Lee la respuesta del servidor
             BufferedReader in = new BufferedReader((new InputStreamReader(socket.getInputStream())));
+            System.out.println("*********************************************");
             String respuesta = in.readLine();
 
+
+            System.out.println("RESPOSTA: "+respuesta);
+
+            in.close();
+            out.close();
             // Cierra la conexion
             socket.close();
 
             // Crea un objeto JSON con la respuesta del servidor
             JSONObject jsonResponse = new JSONObject();
+            System.out.println("RESPOSTA: "+respuesta);
             jsonResponse.put("respuesta", respuesta);
 
             return jsonResponse;
@@ -57,7 +70,7 @@ public class communicationManager {
     }
 
     public static void connect() throws JSONException, communicationManagerException {
-        // Obtener la información de configuración del servidor desde CurrentConfig
+        // Obtener la informaciï¿½n de configuraciï¿½n del servidor desde CurrentConfig
         String username = CurrentConfig.username();
         int listenPort = CurrentConfig.listenPort();
 
@@ -73,13 +86,13 @@ public class communicationManager {
 
             // Verificar la respuesta del servidor
             if (response.has("status") && response.getString("status").equals("error")) {
-                // Si el servidor devuelve un estado de error, lanzar una excepción personalizada
+                // Si el servidor devuelve un estado de error, lanzar una excepciï¿½n personalizada
                 throw new communicationManagerException(response.getString("message"));
             }
 
         } catch (communicationManagerException | JSONException e) {
             System.out.println("Error: " + e);
-            // Manejar la excepción según tus necesidades
+            // Manejar la excepciï¿½n segï¿½n tus necesidades
         }
     }
 
