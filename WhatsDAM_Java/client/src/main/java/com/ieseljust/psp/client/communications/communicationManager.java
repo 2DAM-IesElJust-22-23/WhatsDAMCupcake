@@ -57,7 +57,7 @@ public class communicationManager {
     }
 
     public static void connect() throws JSONException, communicationManagerException {
-        // Obtener la información de configuración del servidor desde CurrentConfig
+        // Obtener la informacion de configuracion del servidor desde CurrentConfig
         String username = CurrentConfig.username();
         int listenPort = CurrentConfig.listenPort();
 
@@ -73,13 +73,13 @@ public class communicationManager {
 
             // Verificar la respuesta del servidor
             if (response.has("status") && response.getString("status").equals("error")) {
-                // Si el servidor devuelve un estado de error, lanzar una excepción personalizada
+                // Si el servidor devuelve un estado de error, lanzar una excepcion personalizada
                 throw new communicationManagerException(response.getString("message"));
             }
 
         } catch (communicationManagerException | JSONException e) {
             System.out.println("Error: " + e);
-            // Manejar la excepción según tus necesidades
+            // Manejar la excepcion segun tus necesidades
         }
     }
 

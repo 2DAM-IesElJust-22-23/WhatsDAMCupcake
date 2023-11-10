@@ -57,10 +57,10 @@ public class serverListener implements Runnable {
         } catch (IOException e) {
             System.out.println("Error: " + e);
         }
-        try {
 
-            while (true) {
+        while (true) {
 
+            try {
                 // 2. Iniciamos un bucle infinito a la espera de recibir conexiones
                 Socket socket = serSocket.accept(); // Espera a que llegue una conexión
 
@@ -118,11 +118,12 @@ public class serverListener implements Runnable {
                         System.out.println("Error: " + e);
                     }
                 }).start();
+            } catch (IOException e) {
+                System.out.println("Error: " + e);
             }
 
-        } catch (IOException e) {
-            System.out.println("Error al establecer la conexión: " + e.getMessage());
         }
+
     }
 
 }
