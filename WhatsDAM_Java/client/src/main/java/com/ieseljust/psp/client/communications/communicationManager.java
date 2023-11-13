@@ -11,6 +11,7 @@ import java.net.Socket;
 
 import com.ieseljust.psp.client.CurrentConfig;
 import com.ieseljust.psp.client.Message;
+import java.io.IOException;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -20,40 +21,39 @@ public class communicationManager {
     /* Aquesta classe s'encarrega de la gestió de la
      comunicació amb el servidor.
      */
-    
     public static JSONObject sendServer(String msg) {
 
-        // TO-DO:
-        // Envía al servidor l'string msg
-        // I retorna un JSON amb la resposta
-
-        try{
-            // Establece la conexión
+        try {
+            // Establece la conexi�n
             Socket socket = new Socket(CurrentConfig.server(), CurrentConfig.port());
 
-            // Envía el mensaje
-            PrintWriter out = new PrintWriter(socket.getOutputStream(),true);
+            // Env�a el mensaje
+            PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
             out.println(msg);
-            
-            // Lee la respuesta del servidor
-            BufferedReader in = new BufferedReader((new InputStreamReader(socket.getInputStream())));
-            String respuesta = in.readLine();
 
-            // Cierra la conexion
+            // Lee la respuesta del servidor
+            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            StringBuilder respuestaBuilder = new StringBuilder();
+            String linea;
+
+            while ((linea = in.readLine()) != null) {
+                respuestaBuilder.append(linea);
+            }
+
+            // Cierra la conexi�n
             socket.close();
 
             // Crea un objeto JSON con la respuesta del servidor
             JSONObject jsonResponse = new JSONObject();
-            jsonResponse.put("respuesta", respuesta);
+            jsonResponse.put("respuesta", respuestaBuilder.toString());
 
             return jsonResponse;
 
-        }catch(Exception e){
+        } catch (IOException | JSONException e) {
             System.out.println("Error: " + e);
         }
 
         return null;
-        
     }
 
     public static void connect() throws JSONException, communicationManagerException {
@@ -83,7 +83,7 @@ public class communicationManager {
         }
     }
 
-    public static void sendMessage(Message m){
+    public static void sendMessage(Message m) {
         // Envia un misstge al servidor (es fa amb una línia!)
-    }    
+    }
 }
