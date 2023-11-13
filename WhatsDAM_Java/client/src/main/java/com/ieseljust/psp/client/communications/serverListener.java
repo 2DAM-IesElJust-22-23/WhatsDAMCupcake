@@ -103,7 +103,14 @@ public class serverListener implements Runnable {
                             // Hacer lo que sea necesario con el mensaje
                             vm.addMessage(mensaje);
                         } else {
-                            System.out.println("Mensaje de tipo desconocido: " + messageType);
+                            OutputStream outputStream = socket.getOutputStream();
+                            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(outputStream);
+                            PrintWriter printWriter = new PrintWriter(outputStreamWriter);
+
+                            String message = "{'status':'ok'}";
+                            printWriter.println(message);
+                            printWriter.flush();
+
                         }
 
                         // Cerramos el socket después de procesar el mensaje
