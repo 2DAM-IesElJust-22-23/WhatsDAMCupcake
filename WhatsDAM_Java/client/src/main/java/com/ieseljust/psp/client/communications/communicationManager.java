@@ -22,25 +22,86 @@ public class communicationManager {
      comunicaci贸 amb el servidor.
      */
     public static JSONObject sendServer(String msg) {
+        
+        
+  /*       Socket socket=new Socket();
+        InetSocketAddress socketAddr=new InetSocketAddress(CurrentConfig.server(), CurrentConfig.port());
 
         try {
-            // Establece la conexi髇
+            socket.connect(socketAddr);
+            // Connexi贸 realitzada amb 猫xit
+            System.out.println("S'ha realitzat la connexi贸 exitosament a "+socketAddr.toString()+". Ara procedirem a tancar-la.");
+
+            // Obtenci贸 dels streams d'entrada i eixida
+            InputStream is=socket.getInputStream();
+            OutputStream os=socket.getOutputStream();
+
+
+            // Creem fluxos per a la lectura i escriptura de car脿cters
+            InputStreamReader isr=new InputStreamReader(is);
+            OutputStreamWriter osw=new OutputStreamWriter(os);
+
+            // Creem fluxos per a la lectura i escriptura de l铆nies
+            BufferedReader bReader=new BufferedReader(isr);
+            PrintWriter pWriter=new PrintWriter(osw);
+
+            // Escrivim al socket l'ordre GET del protocol HTTP per obtenir el document demanat
+            System.out.println("Enviant: "+msg);
+            pWriter.println(msg);
+            pWriter.flush();
+
+
+            String linia;
+            while ((linia=bReader.readLine()) != null ){
+                System.out.println(linia);
+            }
+            
+            pWriter.close();
+            bReader.close();
+            isr.close();
+            osw.close();
+            is.close();
+            os.close();
+
+            socket.close();
+            
+            JSONObject jsonResponse = new JSONObject(linia);
+            //jsonResponse.put("respuesta", respuestaBuilder.toString());
+
+            return jsonResponse;
+        
+        } catch (IOException | JSONException e) {
+            System.out.println("Error: " + e);
+        }
+        
+        return null;
+            
+*/
+
+        
+
+        try {
             Socket socket = new Socket(CurrentConfig.server(), CurrentConfig.port());
 
-            // Env韆 el mensaje
             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+            System.out.println("Enviant al server: "+msg.toString());
             out.println(msg);
+            out.flush();
 
+            
             // Lee la respuesta del servidor
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             StringBuilder respuestaBuilder = new StringBuilder();
             String linea;
 
             while ((linea = in.readLine()) != null) {
+                System.out.println("linea: "+linea);
                 respuestaBuilder.append(linea);
             }
+           
+            System.out.println("Rep: "+respuestaBuilder.toString());
 
-            // Cierra la conexi髇
+           
             socket.close();
 
             // Crea un objeto JSON con la respuesta del servidor

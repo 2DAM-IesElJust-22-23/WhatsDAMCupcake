@@ -80,7 +80,7 @@ class MsgHandler implements Runnable {
         // I com que s'ha fet una actualizació de l'estat al
         // servidor, enviem un broadcast a tots els clients
         // amb la llista d'usuaris (a través del mètode broadCastUsers)
-        Notifier.broadCastUsers();
+        //Notifier.broadCastUsers();
 
         return resposta;
     }
