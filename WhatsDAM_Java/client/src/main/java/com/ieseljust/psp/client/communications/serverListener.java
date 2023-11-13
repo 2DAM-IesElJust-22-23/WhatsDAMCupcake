@@ -50,18 +50,12 @@ public class serverListener implements Runnable {
         // però no cal que creem un fil a propòsit per atendre cada missatge, ja que
         // no som un servidor com a tal, i el que estem fent aci, és mantindre un 
         // canal de recepció només amb el servidor.
-        ServerSocket serSocket = null;
-        try {
-            serSocket = new ServerSocket(listenerPort);
-            CurrentConfig.setlistenPort(serSocket.getLocalPort());
-        } catch (IOException e) {
-            System.out.println("Error: " + e);
-        }
-
         while (true) {
 
             try {
                 // 2. Iniciamos un bucle infinito a la espera de recibir conexiones
+                ServerSocket serSocket = new ServerSocket(listenerPort);
+                CurrentConfig.setlistenPort(serSocket.getLocalPort());
                 Socket socket = serSocket.accept(); // Espera a que llegue una conexión
 
                 // Procesamos la conexión en un hilo aparte
