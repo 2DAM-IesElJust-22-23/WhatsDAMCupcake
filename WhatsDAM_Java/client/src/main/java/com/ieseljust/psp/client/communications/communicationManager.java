@@ -22,9 +22,8 @@ public class communicationManager {
      comunicaciÃ³ amb el servidor.
      */
     public static JSONObject sendServer(String msg) {
-        
-        
-  /*       Socket socket=new Socket();
+
+        /*       Socket socket=new Socket();
         InetSocketAddress socketAddr=new InetSocketAddress(CurrentConfig.server(), CurrentConfig.port());
 
         try {
@@ -76,32 +75,27 @@ public class communicationManager {
         
         return null;
             
-*/
-
-        
-
+         */
         try {
             Socket socket = new Socket(CurrentConfig.server(), CurrentConfig.port());
 
             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-            System.out.println("Enviant al server: "+msg.toString());
+            System.out.println("Enviant al server: " + msg.toString());
             out.println(msg);
             out.flush();
 
-            
             // Lee la respuesta del servidor
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             StringBuilder respuestaBuilder = new StringBuilder();
             String linea;
 
             while ((linea = in.readLine()) != null) {
-                System.out.println("linea: "+linea);
+                System.out.println("linea: " + linea);
                 respuestaBuilder.append(linea);
             }
-           
-            System.out.println("Rep: "+respuestaBuilder.toString());
 
-           
+            System.out.println("Rep: " + respuestaBuilder.toString());
+
             socket.close();
 
             // Crea un objeto JSON con la respuesta del servidor
@@ -145,6 +139,22 @@ public class communicationManager {
     }
 
     public static void sendMessage(Message m) {
-        // Envia un misstge al servidor (es fa amb una lÃ­nia!)
+        try {
+            // Utilizar el método toJSONCommand() para obtener el mensaje en formato JSON
+            JSONObject sendMessage = m.toJSONCommand();
+
+            // Enviar el mensaje al servidor y recibir la respuesta
+            JSONObject response = sendServer(sendMessage.toString());
+
+            // Verificar la respuesta del servidor
+            if (response != null && response.has("status") && response.getString("status").equals("error")) {
+                // Si el servidor devuelve un estado de error, lanzar una excepción
+                throw new communicationManagerException(response.getString("message"));
+            }
+
+        } catch (communicationManagerException | JSONException e) {
+            System.out.println("Error: " + e);
+            // Manejar la excepción según tus necesidades
+        }
     }
 }
