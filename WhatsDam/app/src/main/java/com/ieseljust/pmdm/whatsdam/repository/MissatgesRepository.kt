@@ -1,13 +1,20 @@
 package com.ieseljust.pmdm.whatsdam.repository
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import com.ieseljust.pmdm.whatsdam.model.Mensaje
 import com.ieseljust.pmdm.whatsdam.model.mensajesEnviados
+import com.ieseljust.pmdm.whatsdam.model.CommunicationManager
+import org.json.JSONObject
 
 /**
  * Repositorio para gestionar mensajes en la aplicación.
  * Esta clase actúa como un singleton y proporciona métodos para acceder y gestionar mensajes.
  */
 class MissatgesRepository private constructor(){
+
+    var username:String=""
+    var server:String=""
 
     companion object {
         private var INSTANCE: MissatgesRepository? = null
@@ -44,7 +51,11 @@ class MissatgesRepository private constructor(){
      *
      * @param m El mensaje a agregar.
      */
-    fun add(m: Mensaje) = mensajesEnviados.add(m)
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun add(m: Mensaje): Boolean{
+        mensajesEnviados.add(m.usuario,m.mensaje)
+        return true
+    }
 
     /**
      * Elimina un mensaje del repositorio.
@@ -53,4 +64,36 @@ class MissatgesRepository private constructor(){
      */
     fun remove(m: Mensaje) = mensajesEnviados.remove(m)
 
+    /**
+     * Envía un mensaje al servidor.
+     *
+     * @param msg El mensaje a enviar.
+     */
+    suspend fun sendMessage(msg: String) {
+        CommunicationManager.sendServer(msg)
+    }
+
+    /**
+     * Realiza el login y actualiza las propiedades de usuario y servidor en la clase.
+     *
+     * @param username El nombre de usuario.
+     * @param server El servidor al que conectarse.
+     */
+    @RequiresApi(Build.VERSION_CODES.O)
+    suspend fun login(username: String, server: String): JSONObject {
+        this.username = username
+        this.server = server
+        return CommunicationManager.login(username, server)
+    }
+
+    /**
+     * Obtiene el mensaje en la posición indicada del repositorio.
+     *
+     * @param position La posición del mensaje.
+     * @return El mensaje en la posición indicada.
+     */
+    fun getMessage(position: Int): Mensaje {
+        return mensajesEnviados.getMensaje(position)
+    }
 }
+

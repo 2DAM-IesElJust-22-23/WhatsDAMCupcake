@@ -121,7 +121,7 @@ public class communicationManager {
         registerMessage.put("command", "register");
         registerMessage.put("user", username);
         registerMessage.put("listenPort", listenPort);
-
+        
         try {
             // Enviar el mensaje al servidor y recibir la respuesta
             JSONObject response = sendServer(registerMessage.toString());

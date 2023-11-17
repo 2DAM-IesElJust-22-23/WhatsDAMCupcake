@@ -6,11 +6,11 @@ import android.os.Bundle
 import android.view.View
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.ieseljust.pmdm.whatsdam.ViewModels.MissatgesViewModel
+import com.ieseljust.pmdm.whatsdam.ViewModels.MessagesViewModel
 import com.ieseljust.pmdm.whatsdam.ViewModels.MyAdapter
 import com.ieseljust.pmdm.whatsdam.databinding.ActivityMessagesWindowBinding
 import com.ieseljust.pmdm.whatsdam.model.Mensaje
-import com.ieseljust.pmdm.whatsdam.model.mensajesEnviados
+import com.ieseljust.pmdm.whatsdam.repository.MissatgesRepository
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 
@@ -22,6 +22,7 @@ class Activity_messages_window : AppCompatActivity() {
 
     // Propiedad para acceder a las vistas del diseño XML mediante ViewBinding
     private lateinit var binding: ActivityMessagesWindowBinding
+    private lateinit var viewModel: MessagesViewModel
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,39 +32,32 @@ class Activity_messages_window : AppCompatActivity() {
         binding = ActivityMessagesWindowBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        viewModel = MessagesViewModel(application) // Crear una instancia de MissatgesViewModel
+
         // Obtiene referencias a las vistas de la interfaz de usuario
         val messageText = binding.MessageText
         val textView = binding.connectionInfoTextView
         val sendMessage = binding.sendMessage
 
         // Configurar el RecyclerView
-        val recyclerView = binding.MensajesRecyclerView
+        val recyclerView = binding.MessagesRecyclerView
 
         // Asociar el LayoutManager al RecyclerView
         val layoutManager = LinearLayoutManager(this)
         recyclerView.layoutManager = layoutManager
 
         // Crear e inicializar tu adaptador (MyAdapter) y asignarlo al RecyclerView
-
-        val adapter = MyAdapter(mensajesEnviados) { m: Mensaje, v: View ->
-            val missatgesViewModel = MissatgesViewModel(this.application) // Crea una instancia de MissatgesViewModel
-            missatgesViewModel.MissatgeLongClickedManager(m, v) // Llama a la función desde la instancia
+        val adapter = MyAdapter(MissatgesRepository.getInstance()) { m: Mensaje, v: View ->
+            viewModel.MissatgeLongClickedManager(m, v)
         }
         recyclerView.adapter = adapter
 
         // Indicamos que el tamaño sea fijo
         recyclerView.setHasFixedSize(true)
 
-        // Creamos una instancia de adaptador
-        val missatgesViewModel = MissatgesViewModel(this.application)
-
-        recyclerView.adapter = MyAdapter(mensajesEnviados) { m: Mensaje, v: View ->
-            missatgesViewModel.MissatgeLongClickedManager(m, v)
-        }
-
-        // Obtiene los valores de "NICKNAME_KEY" e "IPSERVER" del Intent
-        val nickname = intent.getStringExtra("NICKNAME_KEY")
-        val ipserver = intent.getStringExtra("IPSERVER")
+        // Obtiene los valores de "NICKNAME_KEY" e "IPSERVER" del ViewModel
+        val nickname = viewModel.getUserName()
+        val ipserver = viewModel.getServer()
 
         // Actualiza el texto de la información de conexión
         textView.text = "Conectat a $ipserver com a $nickname"
@@ -76,17 +70,18 @@ class Activity_messages_window : AppCompatActivity() {
             val hora = horaActual.format(formatter)
 
             // Crear un nuevo objeto de Mensaje y agregarlo a la lista mensajesEnviados.
-            mensajesEnviados.add(Mensaje(nickname.toString(),messageText.text.toString(),hora))
+            viewModel.addMessage(Mensaje(nickname, messageText.text.toString(), hora))
 
-            // Notificar al adaptador de MensajesRecyclerView que se ha insertado un nuevo elemento en la lista.
-            binding.MensajesRecyclerView.adapter?.notifyItemInserted(mensajesEnviados.getUltimoNum())
-
-            // Desplazar la vista del RecyclerView hacia la última posición de la lista (el mensaje recién agregado).
-            recyclerView.scrollToPosition(mensajesEnviados.getUltimoNum())
-
+            // Limpia el texto del campo de mensaje
             messageText.text.clear()
         }
 
+        // Observa cambios en la lista de mensajes y actualiza el adaptador
+        viewModel.messageList.observe(this) { missatges ->
+            // Notificamos al adaptador del RecyclerView que la lista de mensajes ha cambiado
+
+            // Desplazamos la vista del RecyclerView hacia la última posición de la lista
+            recyclerView.scrollToPosition(adapter.itemCount - 1)
+        }
     }
 }
-

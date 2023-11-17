@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background"
-    tools:context=".view.MainActivity">
+    tools:context=".view.ui.MainActivity">
 
     <ImageView
         android:id="@+id/imageView"
@@ -21,7 +21,6 @@
         app:layout_constraintVertical_bias="0.064"
         app:srcCompat="@drawable/logo" />
 
-
     <EditText
         android:id="@+id/nickNameText"
         android:layout_width="wrap_content"
@@ -31,8 +30,6 @@
         android:inputType="text"
         android:minHeight="48dp"
         android:text="@string/nickname"
-        android:contentDescription="@string/nickname"
-        android:hint = "Nickname"
         app:layout_constraintBottom_toTopOf="@+id/serverAddressText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -49,23 +46,46 @@
         android:inputType="text"
         android:minHeight="48dp"
         android:text="@string/serverAddress"
-        android:contentDescription="@string/nickname"
-        android:hint = "Server Address"
-        app:layout_constraintBottom_toTopOf="@id/buttonConnect"
+        app:layout_constraintBottom_toTopOf="@id/frameLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/nickNameText" />
 
-    <Button
-        android:id="@+id/buttonConnect"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/Connect"
-        android:hint = "Connect"
-        android:contentDescription="@string/app_name"
+    <FrameLayout
+        android:id="@+id/frameLayout"
+        android:layout_width="291dp"
+        android:layout_height="128dp"
+        android:foregroundGravity="center_vertical|center|center_horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/serverAddressText"
         app:layout_constraintStart_toStartOf="@+id/serverAddressText"
-        app:layout_constraintTop_toBottomOf="@+id/serverAddressText" />
+        app:layout_constraintTop_toBottomOf="@+id/serverAddressText">
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="visible" />
+
+        <Button
+            android:id="@+id/buttonConnect"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:foregroundGravity="center_vertical|center|center_horizontal"
+            android:gravity="center|center_horizontal|center_vertical"
+            android:text="@string/Connect" />
+
+        <TextView
+            android:id="@+id/statusTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="54dp"
+            android:visibility="visible" />
+    </FrameLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
